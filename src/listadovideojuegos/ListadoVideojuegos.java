@@ -122,6 +122,7 @@ public class ListadoVideojuegos {
         for (Videojuego game : listado) {
             System.out.println(game.toString());
         }
+        System.out.println("Items number: " + listado.size());
     }
     
         
