@@ -5,13 +5,16 @@
  */
 package listadovideojuegos;
 
-import java.util.Objects;
+import java.io.Serializable;
+
+
+
 
 /**
  *
  * @author usuari
  */
-public class Videojuego {
+public class Videojuego implements Serializable{
     private String nombre;
     private int precio;
 

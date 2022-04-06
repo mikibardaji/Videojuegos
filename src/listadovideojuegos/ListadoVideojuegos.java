@@ -5,8 +5,16 @@
  */
 package listadovideojuegos;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -74,11 +82,14 @@ public class ListadoVideojuegos {
                 mostrarDatosAnimales();
                 break;
             case 4:
-                System.out.println("no implementado");
+                System.out.println("grabar videojuegos en archivp");
+                saveItemsToDisk();
                 break;
-            case 6:
-                System.out.println("");
+            case 5:
+                System.out.println("leyendo disco");
+                listado = readItemsToDisk();
                 break;
+
             case 0:
                 System.out.println("saliendo");
                 break;
@@ -124,7 +135,47 @@ public class ListadoVideojuegos {
         }
         System.out.println("Items number: " + listado.size());
     }
+
+    private void saveItemsToDisk() {
+            FileOutputStream escritura = null;
+         try {
+             escritura = new FileOutputStream("juegos.dat");
+             ObjectOutputStream StreamDatos = new ObjectOutputStream(escritura);
+             
+             StreamDatos.writeObject(listado);
+             System.out.println("he grabado " + listado.size() + "registros");
+             
+             
+         } catch (FileNotFoundException ex) {
+             Logger.getLogger(ListadoVideojuegos.class.getName()).log(Level.SEVERE, null, ex);
+         } catch (IOException ex) {
+             Logger.getLogger(ListadoVideojuegos.class.getName()).log(Level.SEVERE, null, ex);
+         } 
+         
+         }
+
+    private ArrayList<Videojuego> readItemsToDisk() {
+         
+        ArrayList<Videojuego> todos = new ArrayList<>();
+         try {
+             FileInputStream fichero = new FileInputStream("juegos.dat");
+             ObjectInputStream lectura = new ObjectInputStream(fichero);
+             todos = (ArrayList<Videojuego>) lectura.readObject();
+         } catch (FileNotFoundException ex) {
+             Logger.getLogger(ListadoVideojuegos.class.getName()).log(Level.SEVERE, null, ex);
+         } catch (IOException ex) {
+             Logger.getLogger(ListadoVideojuegos.class.getName()).log(Level.SEVERE, null, ex);
+         } catch (ClassNotFoundException ex) {
+             Logger.getLogger(ListadoVideojuegos.class.getName()).log(Level.SEVERE, null, ex);
+         }
+         return todos;
+    }
+        
+        
+            
+        
+ }
     
         
     
-}
+
